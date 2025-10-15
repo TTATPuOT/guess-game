@@ -1,0 +1,2 @@
+export const MAX_TRIES = 10
+export const MAX_CRITICS_SCORE_SIMILAR_RANGE = 3

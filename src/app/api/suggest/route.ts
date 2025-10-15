@@ -1,4 +1,4 @@
-import IgdbClient from "@/services/IgdbClient";
+import IgdbClient from '@/services/IgdbClient'
 
 export async function GET(request: Request) {
     const client = new IgdbClient()

@@ -1,17 +1,18 @@
 export enum GameMetricStatus {
-    LESS = "red",
-    DEFAULT = "gray",
-    GREATER = "grass",
+    LESS = 'red',
+    DEFAULT = 'gray',
+    GREATER = 'grass'
 }
 
 export enum GameMetricCorrect {
-    DEFAULT = "gray",
-    CORRECT = "grass",
-    SIMILAR = "yellow",
+    DEFAULT = 'gray',
+    CORRECT = 'grass',
+    SIMILAR = 'yellow'
 }
 
 export interface GameData {
     name: string
+    image: string
     releaseDate: GameMetric
     score: GameMetric
     developer: GameDeveloper
@@ -34,6 +35,5 @@ export interface GameTag {
 export interface GameDeveloper {
     name: string
     country: string
-    status: GameMetricStatus
     correct: GameMetricCorrect
 }

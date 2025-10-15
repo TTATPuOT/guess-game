@@ -1,14 +1,14 @@
 import { Box, Button, Card, Flex, TextField } from '@radix-ui/themes'
 import SearchResult from '@/app/components/Search/SearchResult'
 import useSuggestGame from '@/app/hooks/useSearchGame'
-import { ChangeEvent, use, useCallback, useContext, useMemo, useState } from 'react'
+import { ChangeEvent, useCallback, useContext, useMemo, useState } from 'react'
 import getIgdbImageUrl, { IgdbImageSize } from '@/app/utils/getIgdbImageUrl'
 import SearchLoading from '@/app/components/Search/SearchLoading'
 import SearchEmptyResult from '@/app/components/Search/SearchEmptyResult'
 import GuessContext from '@/app/contexts/GuessContext'
 
 export default function SearchBar() {
-    const { suggestGameCallback } = useContext(GuessContext)
+    const { suggestGameCallback, guesses } = useContext(GuessContext)
     const [value, setValue] = useState<string>('')
     const { inputCallback, isLoading, results } = useSuggestGame()
 
@@ -20,10 +20,13 @@ export default function SearchBar() {
         [inputCallback]
     )
 
-    const onClickCallback = useCallback((id: number) => {
-        setValue('')
-        suggestGameCallback(id)
-    }, [])
+    const onClickCallback = useCallback(
+        (id: number) => {
+            setValue('')
+            suggestGameCallback(id)
+        },
+        [suggestGameCallback]
+    )
 
     const searchResults = useMemo(() => {
         if (results == null) return
@@ -33,6 +36,7 @@ export default function SearchBar() {
         return results.map((game) => (
             <SearchResult
                 name={game.name}
+                disabled={guesses.some((g) => g.id === game.id)}
                 imageUrl={getIgdbImageUrl(IgdbImageSize.micro, game.cover.image_id)}
                 callback={() => onClickCallback(game.id)}
                 key={game.id}

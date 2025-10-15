@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
     turbopack: {
@@ -10,9 +10,9 @@ const nextConfig: NextConfig = {
             '.editorconfig': {
                 loaders: ['raw-loader'],
                 as: '*.js'
-            },
-        },
-    },
-};
+            }
+        }
+    }
+}
 
-export default nextConfig;
+export default nextConfig

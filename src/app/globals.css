@@ -1,12 +1,16 @@
 .radix-themes {
-  --cursor-button: pointer;
+    --cursor-button: pointer;
 }
 
 .search-result {
-  cursor: pointer;
-  transition: 0.2s;
-  border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 12px;
 }
 .search-result:hover {
-  background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(0, 0, 0, 0.35);
+}
+.search-result-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
