@@ -10,15 +10,11 @@ import GuessContext from '@/app/contexts/GuessContext'
 export default function SearchBar() {
     const { suggestGameCallback, guesses } = useContext(GuessContext)
     const [value, setValue] = useState<string>('')
-    const { inputCallback, isLoading, results } = useSuggestGame()
+    const { isLoading, results } = useSuggestGame(value)
 
-    const onChangeCallback = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            setValue(e.currentTarget.value)
-            inputCallback(e.currentTarget.value)
-        },
-        [inputCallback]
-    )
+    const onChangeCallback = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.currentTarget.value)
+    }, [])
 
     const onClickCallback = useCallback(
         (id: number) => {
@@ -61,16 +57,12 @@ export default function SearchBar() {
                 </Button>
             </Flex>
 
-            {value.length > 0 && (
+            {(searchResults != null || isLoading) && value.length > 0 && (
                 <Box position="relative" style={{ zIndex: 2 }}>
                     <Box position="absolute" width="100%">
                         <Card size="1">
                             <Flex direction="column">
-                                {isLoading || searchResults == null ? (
-                                    <SearchLoading />
-                                ) : (
-                                    searchResults
-                                )}
+                                {isLoading ? <SearchLoading /> : searchResults}
                             </Flex>
                         </Card>
                     </Box>

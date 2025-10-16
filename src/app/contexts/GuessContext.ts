@@ -3,7 +3,6 @@ import { IgdbGameWithDeveloper } from '@t/IgdbData'
 
 interface GuessContextData {
     game: IgdbGameWithDeveloper | null
-    tries: number
     guesses: IgdbGameWithDeveloper[]
     suggestGameCallback: (gameId: number) => Promise<void>
     suggestGameIsLoading: boolean
@@ -11,9 +10,8 @@ interface GuessContextData {
 
 const GuessContext = createContext<GuessContextData>({
     game: null,
-    tries: 0,
     guesses: [],
-    suggestGameCallback: async (gameId: number) => {},
+    suggestGameCallback: async () => {},
     suggestGameIsLoading: false
 })
 

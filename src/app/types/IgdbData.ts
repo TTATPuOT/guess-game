@@ -6,6 +6,7 @@ export interface IgdbGame {
     first_release_date: number
     game_modes: IgdbGameMode[]
     genres: IgdbGameGenre[]
+    themes: IgdbGameTheme[]
     involved_companies: IgdbGameInvolvedCompany[] | undefined
     name: string
     platforms: IgdbGamePlatform[]
@@ -31,6 +32,11 @@ export interface IgdbGameMode {
 }
 
 export interface IgdbGameGenre {
+    id: number
+    name: string
+}
+
+export interface IgdbGameTheme {
     id: number
     name: string
 }

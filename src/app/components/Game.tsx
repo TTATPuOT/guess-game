@@ -67,11 +67,11 @@ export default function Game({
                     />
                 </Inset>
                 <Box>
-                    <Heading as="h3" size="5" trim="start" mb="5">
+                    <Heading as="h3" size="5" trim="start" mb="4">
                         {name}
                     </Heading>
 
-                    <Grid columns="3" gap="2" mb="2" align="start">
+                    <Grid columns="3" gap="2" mb="4" align="start">
                         <Box>
                             <Flex gap="2" align="center">
                                 <Text size="1" color="gray">

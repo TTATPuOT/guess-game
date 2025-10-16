@@ -7,7 +7,7 @@ export default function GameBadge({ name, status }: BadgeProps) {
     if (status === GameMetricCorrect.CORRECT) {
         return (
             <Badge color="grass" radius="full">
-                <Text size="2" mx="2" my="1">
+                <Text size="2" mx="2">
                     {name}
                 </Text>
             </Badge>
@@ -15,7 +15,7 @@ export default function GameBadge({ name, status }: BadgeProps) {
     } else if (status === GameMetricCorrect.SIMILAR) {
         return (
             <Badge color="amber" radius="full">
-                <Text size="2" mx="2" my="1">
+                <Text size="2" mx="2">
                     {name}
                 </Text>
             </Badge>
@@ -24,7 +24,7 @@ export default function GameBadge({ name, status }: BadgeProps) {
 
     return (
         <Badge color="gray" radius="full">
-            <Text size="2" mx="2" my="1">
+            <Text size="2" mx="2">
                 {name}
             </Text>
         </Badge>

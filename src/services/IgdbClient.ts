@@ -3,7 +3,7 @@ import OAuthService from '@/services/OAuthService'
 import { IgdbGame, IgdbGameDeveloper, IgdbGameWithDeveloper } from '@t/IgdbData'
 
 export default class IgdbClient {
-    private gamesCount = 1000 // Кол-во игр, доступных по фильтру. Пока не уверен, как иначе рандомить игру
+    private gamesCount = 550 // Кол-во игр, доступных по фильтру. Пока не уверен, как иначе рандомить игру
 
     private endpoint = 'https://api.igdb.com/v4'
 
@@ -97,12 +97,13 @@ export default class IgdbClient {
                 'slug',
                 'cover.image_id',
                 'platforms.name',
-                'game_type.*'
+                'game_type.*',
+                'themes.name'
             ])
             .where([
-                'aggregated_rating > 75',
+                'aggregated_rating > 80',
                 'aggregated_rating_count > 3',
-                'rating_count > 40',
+                'rating_count > 80',
                 'game_type = 0',
                 ...additionalWhere
             ])

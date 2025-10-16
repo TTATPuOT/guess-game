@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@radix-ui/themes'
+import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes'
 import { GameMetricCorrect } from '@t/GameData'
 import GameBadge from '@/app/components/GameBadge'
 import SearchBar from '@/app/components/Search/SearchBar'
@@ -8,6 +8,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { IgdbGameWithDeveloper } from '@t/IgdbData'
 import GuessedGames from '@/app/components/GuessedGames'
 import { MAX_TRIES } from '@/app/constatnts'
+import IgdbGameHoc from '@/app/components/IgdbGameHoc'
 
 export default function GuessScreen() {
     const { game } = useSuggestGame()
@@ -33,20 +34,40 @@ export default function GuessScreen() {
                 game,
                 guesses,
                 suggestGameCallback,
-                suggestGameIsLoading,
-                tries: 0
+                suggestGameIsLoading
             }}>
-            <Box py="5" width="100%">
-                <Text as="p" size="2" mb="2" color="gray" align="center">
-                    Search for an game to make your first guess
-                </Text>
+            {triesLeft > 0 && (
+                <Box py="5" width="100%">
+                    <Text as="p" size="2" mb="2" color="gray" align="center">
+                        Search for an game to make your first guess
+                    </Text>
 
-                <SearchBar />
+                    <SearchBar />
 
-                <Text as="p" size="2" mb="5" color="gray" align="center">
-                    {triesLeft} tries left
-                </Text>
-            </Box>
+                    <Text as="p" size="2" mb="5" color="gray" align="center">
+                        {triesLeft} tries left
+                    </Text>
+                </Box>
+            )}
+            {triesLeft <= 0 && (
+                <Box py="5" width="100%">
+                    <Heading size="8" align="center" color="red">
+                        Unfortunately, you lost :(
+                    </Heading>
+
+                    <Heading size="5" mb="5" align="center">
+                        The game you couldn't guess:
+                    </Heading>
+
+                    {!!game && <IgdbGameHoc data={game} />}
+
+                    <Flex py="5" justify="center">
+                        <Button size="4" onClick={() => window.location.reload()}>
+                            Try again!
+                        </Button>
+                    </Flex>
+                </Box>
+            )}
 
             <GuessedGames />
 
