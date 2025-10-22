@@ -7,7 +7,10 @@ import GameBadge from '@/app/components/GameBadge'
 import sortGameTags from '@/app/utils/sortGameTags'
 import { getCountryData, TCountryCode } from 'countries-list'
 import winImg from '@/app/icons/win.svg'
+import igdbLogo from '@/app/icons/igdb.svg'
 import Image from 'next/image'
+import Confetti from 'react-confetti-boom'
+import Link from 'next/link'
 
 interface GameProps extends GameData {
     winner: boolean
@@ -16,6 +19,7 @@ interface GameProps extends GameData {
 export default function Game({
     name,
     image,
+    link,
     releaseDate,
     developer,
     score,
@@ -49,12 +53,14 @@ export default function Game({
 
     return (
         <Card size="2" mb="5">
+            {winner && <Confetti particleCount={50} mode="boom" />}
             <Flex>
                 <Inset
                     clip="border-box"
                     side="left"
                     mr="3"
-                    style={{ minWidth: 190, maxWidth: 190 }}>
+                    style={{ minWidth: 190, maxWidth: 190 }}
+                    className="hidden md:block">
                     <img
                         style={{
                             objectFit: 'cover',
@@ -66,12 +72,25 @@ export default function Game({
                         alt={name}
                     />
                 </Inset>
-                <Box>
-                    <Heading as="h3" size="5" trim="start" mb="4">
-                        {name}
-                    </Heading>
+                <Box width="100%">
+                    <Flex>
+                        <Heading as="h3" size="5" trim="start" mb="4" wrap="pretty">
+                            <span style={{ display: 'inline-block', marginRight: 10 }}>{name}</span>
+                            <Link href={link} target="_blank" rel="noopener noreferrer">
+                                <Image
+                                    src={igdbLogo}
+                                    alt={`See ${name} at IGDB`}
+                                    style={{
+                                        opacity: 0.7,
+                                        width: 30,
+                                        display: 'inline-block'
+                                    }}
+                                />
+                            </Link>
+                        </Heading>
+                    </Flex>
 
-                    <Grid columns="3" gap="2" mb="4" align="start">
+                    <Grid columns={{ xs: '3', initial: '1' }} gap="2" mb="4" align="start">
                         <Box>
                             <Flex gap="2" align="center">
                                 <Text size="1" color="gray">

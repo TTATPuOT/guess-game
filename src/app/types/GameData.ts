@@ -13,6 +13,7 @@ export enum GameMetricCorrect {
 export interface GameData {
     name: string
     image: string
+    link: string
     releaseDate: GameMetric
     score: GameMetric
     developer: GameDeveloper

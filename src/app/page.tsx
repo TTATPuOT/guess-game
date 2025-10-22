@@ -12,7 +12,7 @@ export default function Home() {
     }, [])
 
     return (
-        <Container width="700px">
+        <Container width="700px" maxWidth="100%" px="5">
             <Flex justify="center" align="center" direction="column">
                 {!started && (
                     <Box mt="5">

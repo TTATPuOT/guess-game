@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes'
+import { Box, Button, Flex, Heading, Spinner, Text } from '@radix-ui/themes'
 import { GameMetricCorrect } from '@t/GameData'
 import GameBadge from '@/app/components/GameBadge'
 import SearchBar from '@/app/components/Search/SearchBar'
@@ -11,7 +11,7 @@ import { MAX_TRIES } from '@/app/constatnts'
 import IgdbGameHoc from '@/app/components/IgdbGameHoc'
 
 export default function GuessScreen() {
-    const { game } = useSuggestGame()
+    const { game, isLoading } = useSuggestGame()
     const [guesses, setGuesses] = useState<IgdbGameWithDeveloper[]>([])
     const [suggestGameIsLoading, setSuggestGameIsLoading] = useState<boolean>(false)
 
@@ -28,6 +28,20 @@ export default function GuessScreen() {
 
     const triesLeft = useMemo(() => MAX_TRIES - guesses.length, [guesses])
 
+    const isGuessedGameSuggested = useMemo(
+        () => !!guesses.find((g) => g.id === game?.id),
+        [guesses, game?.id]
+    )
+
+    if (isLoading) {
+        return (
+            <Flex align="center" direction="column">
+                <Spinner size="3" />
+                <Heading size="3">Now we'll find a game for you...</Heading>
+            </Flex>
+        )
+    }
+
     return (
         <GuessContext.Provider
             value={{
@@ -36,7 +50,7 @@ export default function GuessScreen() {
                 suggestGameCallback,
                 suggestGameIsLoading
             }}>
-            {triesLeft > 0 && (
+            {triesLeft > 0 && !isGuessedGameSuggested && (
                 <Box py="5" width="100%">
                     <Text as="p" size="2" mb="2" color="gray" align="center">
                         Search for an game to make your first guess
@@ -49,7 +63,20 @@ export default function GuessScreen() {
                     </Text>
                 </Box>
             )}
-            {triesLeft <= 0 && (
+            {isGuessedGameSuggested && (
+                <Box pb="5" width="100%">
+                    <Heading size="8" align="center" color="green">
+                        You win in {guesses.length} tries! 🏆
+                    </Heading>
+
+                    <Flex pb="5" justify="center">
+                        <Button size="4" onClick={() => window.location.reload()}>
+                            One more time?
+                        </Button>
+                    </Flex>
+                </Box>
+            )}
+            {triesLeft <= 0 && !isGuessedGameSuggested && (
                 <Box py="5" width="100%">
                     <Heading size="8" align="center" color="red">
                         Unfortunately, you lost :(
@@ -72,7 +99,9 @@ export default function GuessScreen() {
             <GuessedGames />
 
             <Flex justify="center" align="center" direction="column" pt="2" pb="5">
-                <Text mb="2">Use the matching attributes to make more guesses. Good luck!</Text>
+                <Text mb="2" align="center">
+                    Use the matching attributes to make more guesses. Good luck!
+                </Text>
                 <Flex gap="2">
                     <GameBadge name="Not match" status={GameMetricCorrect.DEFAULT} />
                     <GameBadge name="Close" status={GameMetricCorrect.SIMILAR} />

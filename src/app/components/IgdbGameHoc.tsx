@@ -10,6 +10,7 @@ import numberToString from '@/app/utils/numberToString'
 import { compareDeveloperCorrect } from '@/app/utils/compareDeveloper'
 import { useContext, useMemo } from 'react'
 import GuessContext from '@/app/contexts/GuessContext'
+import getIgdbGameUrl from '@/app/utils/getIgdbGameUrl'
 
 interface IgdbGameHocProps {
     data: IgdbGameWithDeveloper
@@ -110,11 +111,14 @@ export default function IgdbGameHoc({ data }: IgdbGameHocProps) {
         [data.cover.image_id]
     )
 
+    const link = useMemo(() => getIgdbGameUrl(data.slug), [data.slug])
+
     return (
         <Game
             winner={data.id === game?.id}
             name={data.name}
             image={imageUrl}
+            link={link}
             releaseDate={releaseDate}
             score={score}
             developer={developer}
