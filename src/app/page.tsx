@@ -3,11 +3,14 @@
 import { Box, Button, Container, Flex, Heading } from '@radix-ui/themes'
 import GuessScreen from '@/app/components/GuessScreen'
 import { useCallback, useState } from 'react'
+import { ym } from 'react-metrika'
+import { YANDEX_METRIKA_ID } from '@/app/constatnts'
 
 export default function Home() {
     const [started, setStarted] = useState(false)
 
     const startCallback = useCallback(() => {
+        ym(YANDEX_METRIKA_ID, 'reachGoal', 'start')
         setStarted(true)
     }, [])
 

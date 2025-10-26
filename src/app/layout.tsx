@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import React from 'react'
 import { Theme, Flex, Box, Heading, Container, Separator, Link, Text } from '@radix-ui/themes'
+import { MetrikaCounter } from 'react-metrika'
+import { YANDEX_METRIKA_ID } from '@/app/constatnts'
 import 'normalize.css'
 import '@radix-ui/themes/styles.css'
 import './globals.css'
@@ -64,6 +66,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                         </Box>
                     </Flex>
                 </Theme>
+                <MetrikaCounter
+                    id={YANDEX_METRIKA_ID}
+                    options={{
+                        trackHash: true,
+                        webvisor: true
+                    }}
+                />
             </body>
         </html>
     )
