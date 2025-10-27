@@ -31,32 +31,37 @@ export default function IgdbGameHoc({ data }: IgdbGameHocProps) {
     }, [data.genres, game?.genres])
 
     const tags = useMemo(() => {
-        return [
-            ...data.themes.map((i) => {
+        const themes =
+            data.themes?.map((i) => {
                 const isCorrect = game?.themes.some((g) => g.id === i.id) || false
 
                 return {
                     name: i.name,
                     status: isCorrect ? GameMetricCorrect.CORRECT : GameMetricCorrect.DEFAULT
                 }
-            }),
-            ...data.game_modes.map((i) => {
+            }) ?? []
+
+        const gameModes =
+            data.game_modes?.map((i) => {
                 const isCorrect = game?.game_modes.some((g) => g.id === i.id) || false
 
                 return {
                     name: i.name,
                     status: isCorrect ? GameMetricCorrect.CORRECT : GameMetricCorrect.DEFAULT
                 }
-            }),
-            ...data.player_perspectives.map((i) => {
+            }) ?? []
+
+        const perspectives =
+            data.player_perspectives?.map((i) => {
                 const isCorrect = game?.player_perspectives.some((g) => g.id === i.id) || false
 
                 return {
                     name: i.name,
                     status: isCorrect ? GameMetricCorrect.CORRECT : GameMetricCorrect.DEFAULT
                 }
-            })
-        ]
+            }) ?? []
+
+        return [...themes, ...gameModes, ...perspectives]
     }, [
         data.themes,
         data.themes,

@@ -4,11 +4,12 @@ import GameBadge from '@/app/components/GameBadge'
 import SearchBar from '@/app/components/Search/SearchBar'
 import useSuggestGame from '@/app/hooks/useSuggestGame'
 import GuessContext from '@/app/contexts/GuessContext'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { IgdbGameWithDeveloper } from '@t/IgdbData'
 import GuessedGames from '@/app/components/GuessedGames'
-import { MAX_TRIES } from '@/app/constatnts'
+import { MAX_TRIES, YANDEX_METRIKA_ID } from '@/app/constatnts'
 import IgdbGameHoc from '@/app/components/IgdbGameHoc'
+import { ym } from 'react-metrika'
 
 export default function GuessScreen() {
     const { game, isLoading } = useSuggestGame()
@@ -18,20 +19,45 @@ export default function GuessScreen() {
     const suggestGameCallback = useCallback(
         async (gameId: number) => {
             setSuggestGameIsLoading(true)
-            const game = await fetch(`/api/game/${gameId}`)
+            const data = await fetch(`/api/game/${gameId}`)
+            const game: IgdbGameWithDeveloper = await data.json()
 
-            setGuesses([await game.json(), ...guesses])
+            setGuesses([game, ...guesses])
             setSuggestGameIsLoading(false)
+
+            ym(YANDEX_METRIKA_ID, 'reachGoal', 'suggestGame', {
+                name: game.name,
+                id: gameId
+            })
         },
         [guesses]
     )
 
     const triesLeft = useMemo(() => MAX_TRIES - guesses.length, [guesses])
 
+    useEffect(() => {
+        if (triesLeft === 0 && game) {
+            ym(YANDEX_METRIKA_ID, 'reachGoal', 'lose', {
+                name: game.name,
+                id: game.id
+            })
+        }
+    }, [triesLeft, game])
+
     const isGuessedGameSuggested = useMemo(
         () => !!guesses.find((g) => g.id === game?.id),
         [guesses, game?.id]
     )
+
+    useEffect(() => {
+        if (isGuessedGameSuggested && game) {
+            ym(YANDEX_METRIKA_ID, 'reachGoal', 'win', {
+                name: game.name,
+                id: game.id,
+                try: MAX_TRIES - triesLeft
+            })
+        }
+    }, [isGuessedGameSuggested, game, triesLeft])
 
     if (isLoading) {
         return (
