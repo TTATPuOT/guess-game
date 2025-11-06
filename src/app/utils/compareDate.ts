@@ -34,10 +34,10 @@ export function compareDateCorrect(
         return GameMetricCorrect.CORRECT
     }
 
-    const aMin = aDate.subtract(MAX_RELEASE_DATE_YEARS_SIMILAR_RANGE, 'years')
-    const aMax = aDate.add(MAX_RELEASE_DATE_YEARS_SIMILAR_RANGE, 'years')
+    const aMin = aDate.clone().subtract(MAX_RELEASE_DATE_YEARS_SIMILAR_RANGE, 'years')
+    const aMax = aDate.clone().add(MAX_RELEASE_DATE_YEARS_SIMILAR_RANGE, 'years')
 
-    if (aMin.isAfter(bDate, 'year') && aMax.isBefore(bDate, 'year')) {
+    if (aMin.isSameOrBefore(bDate, 'year') && aMax.isSameOrAfter(bDate, 'year')) {
         return GameMetricCorrect.SIMILAR
     }
 
