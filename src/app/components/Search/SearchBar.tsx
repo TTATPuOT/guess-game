@@ -1,4 +1,4 @@
-import { Box, Button, Card, Flex, TextField } from '@radix-ui/themes'
+import { Box, Card, Flex, TextField } from '@radix-ui/themes'
 import SearchResult from '@/app/components/Search/SearchResult'
 import useSuggestGame from '@/app/hooks/useSearchGame'
 import { ChangeEvent, useCallback, useContext, useMemo, useState } from 'react'
@@ -52,9 +52,6 @@ export default function SearchBar() {
                         value={value}
                     />
                 </Box>
-                <Button tabIndex={1} size="3">
-                    Guess
-                </Button>
             </Flex>
 
             {(searchResults != null || isLoading) && value.length > 0 && (

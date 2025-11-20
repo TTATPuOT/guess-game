@@ -7,12 +7,20 @@ export default class IgdbClient {
 
     private endpoint = 'https://api.igdb.com/v4'
 
-    async search(query: string): Promise<IgdbGame[]> {
-        const request = (
-            await this.getBaseGameRequest(
-                query.split(' ').map((q) => `name ~ *"${q}"*`) // Дробим параметры, чтобы сделать более "эластичный" поиск
-            )
-        ).limit(5)
+    async search(
+        query: string,
+        excludedGameIds: number[] | undefined = undefined
+    ): Promise<IgdbGame[]> {
+        const additionalWhere: string[] = []
+        additionalWhere.push(
+            ...query.split(' ').map((q) => `name ~ *"${q}"*`) // Дробим параметры, чтобы сделать более "эластичный" поиск
+        )
+
+        if (excludedGameIds && excludedGameIds.length > 0) {
+            additionalWhere.push(`id != (${excludedGameIds.join(',')})`)
+        }
+
+        const request = (await this.getBaseGameRequest(additionalWhere)).limit(7)
 
         const result = await request.request(this.endpoint + '/games')
 

@@ -10,6 +10,7 @@ import GuessedGames from '@/app/components/GuessedGames'
 import { MAX_TRIES, YANDEX_METRIKA_ID } from '@/app/constatnts'
 import IgdbGameHoc from '@/app/components/IgdbGameHoc'
 import { ym } from 'react-metrika'
+import Summary from '@/app/components/Summary'
 
 export default function GuessScreen() {
     const { game, isLoading } = useSuggestGame()
@@ -87,6 +88,8 @@ export default function GuessScreen() {
                     <Text as="p" size="2" mb="5" color="gray" align="center">
                         {triesLeft} tries left
                     </Text>
+
+                    <Summary />
                 </Box>
             )}
             {isGuessedGameSuggested && (
