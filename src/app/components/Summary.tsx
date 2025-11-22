@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Heading, Text, Tooltip } from '@radix-ui/themes'
+import { Box, Card, Flex, Grid, Heading, Text, Tooltip } from '@radix-ui/themes'
 import Flag from 'react-world-flags'
 import { GameMetricCorrect } from '@t/GameData'
 import GameBadge from '@/app/components/GameBadge'
@@ -52,8 +52,15 @@ export default function Summary() {
                 Summary ✨
             </Heading>
             <Card size="2" mb="5">
-                <Flex gap="3" align="start" justify="start">
-                    <Box minWidth="130px">
+                <Flex
+                    gap="3"
+                    align="start"
+                    justify="start"
+                    direction={{ initial: 'column', sm: 'row' }}>
+                    <Grid
+                        columns={{ initial: '1', xs: '3', sm: '1' }}
+                        align="end"
+                        minWidth={{ initial: '100%', sm: '145px' }}>
                         <Box>
                             <Text as="div" size="3" color="gray">
                                 Release Year
@@ -97,7 +104,7 @@ export default function Summary() {
                         <Box mt="1">
                             {(!!developer.correct.developerName || !!developer.correct.country) && (
                                 <>
-                                    <Text as="div" size="3" color="gray">
+                                    <Text as="div" size="3" color="gray" wrap="nowrap">
                                         Developer {!developer.correct.developerName && ' from'}
                                     </Text>
                                     {!!developer.correct.developerName && (
@@ -119,7 +126,7 @@ export default function Summary() {
                                 !developer.correct.country &&
                                 developer.excludedCountries.length > 0 && (
                                     <>
-                                        <Text as="div" size="3" color="red">
+                                        <Text as="div" size="3" color="red" wrap="nowrap">
                                             Developer not from
                                         </Text>
                                         <Flex gap="1" align="center" justify="start" wrap="wrap">
@@ -128,8 +135,8 @@ export default function Summary() {
                                     </>
                                 )}
                         </Box>
-                    </Box>
-                    <Box maxWidth="calc(100% - 130px)">
+                    </Grid>
+                    <Box>
                         <Flex direction="column" gapY="2">
                             {genres.length > 0 && (
                                 <Flex gap="2" wrap="wrap">

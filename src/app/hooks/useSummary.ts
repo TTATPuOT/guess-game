@@ -112,7 +112,7 @@ export default function useSummary() {
             ? iso.whereNumeric(numberToString(game.developer.country))?.alpha2
             : ''
 
-        console.log({
+        setDeveloper({
             excludedCountries: guessDevelopers
                 .filter(
                     (value, index, array) =>
@@ -126,26 +126,6 @@ export default function useSummary() {
                         slug: slug ?? ''
                     }
                 }),
-            correct: {
-                developerName: isDeveloperGuessed ? (game.developer?.name ?? null) : null,
-                country: isCountryGuessed
-                    ? {
-                          name: getCountryData(gameCountrySlug as TCountryCode)?.name ?? '',
-                          slug: gameCountrySlug ?? ''
-                      }
-                    : null
-            }
-        })
-
-        setDeveloper({
-            excludedCountries: guessDevelopers.map((i) => {
-                const slug = iso.whereNumeric(numberToString(i.country))?.alpha2
-
-                return {
-                    name: getCountryData(slug as TCountryCode)?.name ?? '',
-                    slug: slug ?? ''
-                }
-            }),
             correct: {
                 developerName: isDeveloperGuessed ? (game.developer?.name ?? null) : null,
                 country: isCountryGuessed
