@@ -4,6 +4,11 @@ import { NextRequest } from 'next/server'
 export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams
     const query = searchParams.get('query')
+    const excludedIds = searchParams
+        .get('excluded_ids')
+        ?.split(',')
+        ?.filter((i) => !!i)
+        ?.map((i) => parseInt(i))
 
     if (!query || query.length < 4) {
         return new Response(
@@ -18,7 +23,7 @@ export async function GET(req: NextRequest) {
     }
 
     const client = new IgdbClient()
-    const game = await client.search(query)
+    const game = await client.search(query, excludedIds)
 
     return new Response(JSON.stringify(game), {
         status: 200,

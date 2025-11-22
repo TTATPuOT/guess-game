@@ -9,7 +9,7 @@
     transition: 0.2s;
     border-radius: 12px;
 }
-.search-result:hover {
+.search-result:hover, .search-result-hover {
     background-color: rgba(0, 0, 0, 0.35);
 }
 .search-result-disabled {

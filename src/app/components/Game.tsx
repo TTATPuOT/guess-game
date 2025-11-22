@@ -94,7 +94,7 @@ export default function Game({
                         <Box>
                             <Flex gap="2" align="center">
                                 <Text size="1" color="gray">
-                                    Release Date
+                                    Release Year
                                 </Text>
                                 <StatusArrow status={releaseDate.status} />
                             </Flex>
