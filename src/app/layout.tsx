@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     },
     keywords: ['guess game', 'game', 'try to guess game', 'game guessing'],
     verification: {
-        yandex: '1ad8b382e8d7d869',
+        yandex: '2684a33cdb18e21a',
         google: 'zcQCRg_P1EbPus0Br6mfVq-40WcyIz9nSK1x2rZx8QY'
     }
 }
