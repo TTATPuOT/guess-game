@@ -13,7 +13,11 @@ export const metadata: Metadata = {
     icons: {
         icon: '/favicon.png'
     },
-    keywords: ['guess game', 'game', 'try to guess game', 'game guessing']
+    keywords: ['guess game', 'game', 'try to guess game', 'game guessing'],
+    verification: {
+        yandex: '1ad8b382e8d7d869',
+        google: 'zcQCRg_P1EbPus0Br6mfVq-40WcyIz9nSK1x2rZx8QY'
+    }
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
