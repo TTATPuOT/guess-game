@@ -3,6 +3,7 @@ import React from 'react'
 import { Theme, Flex, Box, Heading, Container, Separator, Link, Text } from '@radix-ui/themes'
 import Metrika from '@/app/components/Metrika'
 import { MAX_TRIES } from '@/app/constatnts'
+import Seo from '@/app/components/Seo'
 import 'normalize.css'
 import '@radix-ui/themes/styles.css'
 import './globals.css'
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang="en">
             <body>
+                <Seo />
                 <Theme appearance="dark">
                     <Flex direction="column" gap="2">
                         <Box minHeight="100vh" pb="40px">
