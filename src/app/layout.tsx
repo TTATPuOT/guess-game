@@ -6,6 +6,7 @@ import { MAX_TRIES } from '@/app/constatnts'
 import 'normalize.css'
 import '@radix-ui/themes/styles.css'
 import './globals.css'
+import AuthButton from '@/app/components/AuthButton'
 
 export const metadata: Metadata = {
     title: 'Guess Game',
@@ -28,8 +29,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     <Flex direction="column" gap="2">
                         <Box minHeight="100vh" pb="40px">
                             <Box position="sticky" pb="5">
-                                <Container>
-                                    <Flex gap="3" justify="between">
+                                <Container width="700px">
+                                    <Flex
+                                        gap="3"
+                                        justify="between"
+                                        align="center"
+                                        position="relative">
                                         <Box flexGrow="1" py="3">
                                             <Heading m="0" size="6" align="center">
                                                 Guess Game
@@ -43,6 +48,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                                                     @patriotovsky
                                                 </Link>
                                             </Heading>
+                                            <Flex
+                                                position="absolute"
+                                                right="0"
+                                                top="0"
+                                                height="100%"
+                                                align="center">
+                                                <AuthButton />
+                                            </Flex>
                                         </Box>
                                     </Flex>
                                 </Container>
