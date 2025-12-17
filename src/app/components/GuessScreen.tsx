@@ -11,6 +11,7 @@ import { MAX_TRIES, YANDEX_METRIKA_ID } from '@/app/constatnts'
 import IgdbGameHoc from '@/app/components/IgdbGameHoc'
 import { ym } from 'react-metrika'
 import Summary from '@/app/components/Summary'
+import HintButton from '@/app/components/HintButton'
 
 export default function GuessScreen() {
     const { game, isLoading } = useSuggestGame()
@@ -85,9 +86,19 @@ export default function GuessScreen() {
 
                     <SearchBar />
 
-                    <Text as="p" size="2" mb="5" color="gray" align="center">
-                        {triesLeft} tries left
-                    </Text>
+                    <Flex gap="3" justify="center" align="center" mb="5" mt="3">
+                        {guesses.length > 0 && <HintButton />}
+                        {guesses.length === 0 && (
+                            <Button size="2" variant="soft" disabled>
+                                Hint will be able after first guess
+                            </Button>
+                        )}
+                        <Box>
+                            <Text size="2" color="gray" align="center">
+                                {triesLeft} tries left
+                            </Text>
+                        </Box>
+                    </Flex>
 
                     <Summary />
                 </Box>
