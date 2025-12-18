@@ -12,11 +12,19 @@ import IgdbGameHoc from '@/app/components/IgdbGameHoc'
 import { ym } from 'react-metrika'
 import Summary from '@/app/components/Summary'
 import HintButton from '@/app/components/HintButton'
+import { HintData } from '@t/HintData'
 
 export default function GuessScreen() {
     const { game, isLoading } = useSuggestGame()
     const [guesses, setGuesses] = useState<IgdbGameWithDeveloper[]>([])
     const [suggestGameIsLoading, setSuggestGameIsLoading] = useState<boolean>(false)
+    const [hintData, setHintData] = useState<HintData>({
+        genres: [],
+        game_modes: [],
+        player_perspectives: [],
+        platforms: [],
+        themes: []
+    })
 
     const suggestGameCallback = useCallback(
         async (gameId: number) => {
@@ -76,7 +84,9 @@ export default function GuessScreen() {
                 game,
                 guesses,
                 suggestGameCallback,
-                suggestGameIsLoading
+                suggestGameIsLoading,
+                hintData,
+                setHintData
             }}>
             {triesLeft > 0 && !isGuessedGameSuggested && (
                 <Box py="5" width="100%">
