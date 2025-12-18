@@ -1,16 +1,17 @@
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import secondToTime from '@/app/utils/secondToTime'
 import { Button } from '@radix-ui/themes'
 import { useCountdown } from 'usehooks-ts'
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import GuessContext from '@/app/contexts/GuessContext'
 import getHintFromGame from '@/app/utils/getHintFromGame'
+import { HINT_COUNTDOWN } from '@/app/constatnts'
 
 export default function HintButton() {
     const { game, guesses, hintData, setHintData } = useContext(GuessContext)
     const [clicked, setClicked] = useState<boolean>(false)
 
     const [countdown, { startCountdown, resetCountdown }] = useCountdown({
-        countStart: 5,
+        countStart: HINT_COUNTDOWN,
         intervalMs: 1000
     })
 

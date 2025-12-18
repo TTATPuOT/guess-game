@@ -4,4 +4,4 @@ export const MAX_RELEASE_DATE_YEARS_SIMILAR_RANGE = 2
 
 export const YANDEX_METRIKA_ID = 104838682
 
-export const ANIMATIONS_MS = 300
+export const HINT_COUNTDOWN = 300
