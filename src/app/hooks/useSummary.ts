@@ -33,7 +33,7 @@ type TagsData = {
 }
 
 export default function useSummary() {
-    const { guesses, game } = useContext(GuessContext)
+    const { guesses, game, hintData } = useContext(GuessContext)
 
     const [year, setYear] = useState<RangeData>({ min: null, max: null, correct: null })
     const [criticsScore, setCriticsScore] = useState<RangeData>({
@@ -49,6 +49,7 @@ export default function useSummary() {
         }
     })
     const [labels, setLabels] = useState<TagsData>({ genres: [], tags: [], platforms: [] })
+    const [hints, setHints] = useState<TagsData>({ genres: [], tags: [], platforms: [] })
 
     useEffect(() => {
         if (!guesses || !game) return
@@ -138,33 +139,47 @@ export default function useSummary() {
         })
 
         const gameGenres = getGameGenres(game)
-        const guessedGenres = guesses
-            .map((i) => getGameGenres(i))
-            .flat()
-            .filter((value, index, array) => array.indexOf(value) === index)
-            .filter((i) => gameGenres.includes(i))
+        const guessedGenres = stripItems(
+            guesses.map((i) => getGameGenres(i)),
+            gameGenres
+        )
+        const hintGenres = hintData.genres.filter((i) => !guessedGenres.includes(i))
 
         const gameTags = getGameTags(game)
-        const guessedTags = guesses
-            .map((i) => getGameTags(i))
-            .flat()
-            .filter((value, index, array) => array.indexOf(value) === index)
-            .filter((i) => gameTags.includes(i))
+        const guessedTags = stripItems(
+            guesses.map((i) => getGameTags(i)),
+            gameTags
+        )
+        const hintTags = [
+            ...hintData.themes,
+            ...hintData.game_modes,
+            ...hintData.player_perspectives
+        ].filter((i) => !guessedTags.includes(i))
 
         const gamePlatforms = getGamePlatforms(game)
-        const guessedPlatforms = guesses
-            .map((i) => getGamePlatforms(i))
-            .flat()
-            .filter((value, index, array) => array.indexOf(value) === index)
-            .filter((i) => gamePlatforms.includes(i))
+        const guessedPlatforms = stripItems(
+            guesses.map((i) => getGamePlatforms(i)),
+            gamePlatforms
+        )
+        const hintPlatforms = hintData.platforms.filter((i) => !guessedPlatforms.includes(i))
 
         setLabels({ genres: guessedGenres, tags: guessedTags, platforms: guessedPlatforms })
-    }, [guesses, game])
+        setHints({ genres: hintGenres, tags: hintTags, platforms: hintPlatforms })
+    }, [guesses, game, setLabels, setHints, hintData])
 
     return {
         year,
         criticsScore,
         developer,
-        labels
+        labels,
+        hints,
+        showSummary: guesses.length > 0
     }
+}
+
+function stripItems(items: string[][], exclude: string[]): string[] {
+    return items
+        .flat()
+        .filter((value, index, array) => array.indexOf(value) === index)
+        .filter((i) => exclude.includes(i))
 }

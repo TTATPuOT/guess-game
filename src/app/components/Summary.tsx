@@ -3,12 +3,10 @@ import Flag from 'react-world-flags'
 import { GameMetricCorrect } from '@t/GameData'
 import GameBadge from '@/app/components/GameBadge'
 import useSummary from '@/app/hooks/useSummary'
-import { useContext, useMemo } from 'react'
-import GuessContext from '@/app/contexts/GuessContext'
+import { useMemo } from 'react'
 
 export default function Summary() {
-    const { guesses } = useContext(GuessContext)
-    const { year, criticsScore, developer, labels } = useSummary()
+    const { year, criticsScore, developer, labels, hints, showSummary } = useSummary()
 
     const notFromCountries = useMemo(
         () =>
@@ -21,30 +19,42 @@ export default function Summary() {
     )
 
     const platforms = useMemo(
-        () =>
-            labels.platforms.map((i) => (
+        () => [
+            ...labels.platforms.map((i) => (
                 <GameBadge key={i} name={i} size="3" status={GameMetricCorrect.CORRECT} />
             )),
-        [labels.platforms]
+            hints.platforms.map((i) => (
+                <GameBadge key={i} name={i} size="3" status={GameMetricCorrect.HINT} />
+            ))
+        ],
+        [labels.platforms, hints.platforms]
     )
 
     const genres = useMemo(
-        () =>
-            labels.genres.map((i) => (
+        () => [
+            ...labels.genres.map((i) => (
                 <GameBadge key={i} name={i} size="3" status={GameMetricCorrect.CORRECT} />
             )),
-        [labels.genres]
+            ...hints.genres.map((i) => (
+                <GameBadge key={i} name={i} size="3" status={GameMetricCorrect.HINT} />
+            ))
+        ],
+        [labels.genres, hints.genres]
     )
 
     const tags = useMemo(
-        () =>
-            labels.tags.map((i) => (
+        () => [
+            ...labels.tags.map((i) => (
                 <GameBadge key={i} name={i} size="3" status={GameMetricCorrect.CORRECT} />
             )),
-        [labels.tags]
+            ...hints.tags.map((i) => (
+                <GameBadge key={i} name={i} size="3" status={GameMetricCorrect.HINT} />
+            ))
+        ],
+        [labels.tags, hints.tags]
     )
 
-    if (guesses.length <= 0) return null
+    if (!showSummary) return null
 
     return (
         <>

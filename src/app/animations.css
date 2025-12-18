@@ -21,6 +21,16 @@
     }
 }
 
+@keyframes animation-badge-highlight {
+    0% {
+        left: -30px;
+    }
+
+    100% {
+        left: calc(100% + 10px);
+    }
+}
+
 .animation-button-highlight {
     position: relative;
     overflow: hidden;
@@ -33,7 +43,24 @@
     left: -30px;
     width: 20px;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.20);
     transform: skewX(-30deg);
-    animation: animation-button-highlight 10.5s ease-in-out infinite;
+    animation: animation-button-highlight 10.5s infinite ease-in-out;
+}
+
+.animation-badge-highlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.animation-badge-highlight:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: -30px;
+    width: 20px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.35);
+    transform: skewX(-30deg);
+    animation: animation-badge-highlight 1.5s ease-in-out;
 }

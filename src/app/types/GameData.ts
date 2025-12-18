@@ -7,7 +7,8 @@ export enum GameMetricStatus {
 export enum GameMetricCorrect {
     DEFAULT = 'gray',
     CORRECT = 'grass',
-    SIMILAR = 'yellow'
+    SIMILAR = 'yellow',
+    HINT = 'indigo'
 }
 
 export interface GameData {
