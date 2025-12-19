@@ -29,7 +29,8 @@ export default function getHintFromGame(
         themes: [
             ...hintData.themes,
             ...getRandomArrayItems(getGameUnguessedTags(game, guesses, hintData, 'themes'))
-        ]
+        ],
+        count: hintData.count + 1
     }
 }
 

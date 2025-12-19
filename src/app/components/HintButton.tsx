@@ -4,7 +4,8 @@ import { Button } from '@radix-ui/themes'
 import { useCountdown } from 'usehooks-ts'
 import GuessContext from '@/app/contexts/GuessContext'
 import getHintFromGame from '@/app/utils/getHintFromGame'
-import { HINT_COUNTDOWN } from '@/app/constatnts'
+import { HINT_COUNTDOWN, YANDEX_METRIKA_ID } from '@/app/constatnts'
+import { ym } from 'react-metrika'
 
 export default function HintButton() {
     const { game, guesses, hintData, setHintData } = useContext(GuessContext)
@@ -35,6 +36,8 @@ export default function HintButton() {
         resetCountdown()
         startCountdown()
         setClicked(false)
+
+        ym(YANDEX_METRIKA_ID, 'reachGoal', 'hint')
     }, [
         isHintAvailable,
         clicked,

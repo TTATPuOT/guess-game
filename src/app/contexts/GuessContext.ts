@@ -21,7 +21,8 @@ const GuessContext = createContext<GuessContextData>({
         genres: [],
         themes: [],
         platforms: [],
-        player_perspectives: []
+        player_perspectives: [],
+        count: 0
     },
     setHintData: () => {}
 })

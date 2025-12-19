@@ -23,7 +23,8 @@ export default function GuessScreen() {
         game_modes: [],
         player_perspectives: [],
         platforms: [],
-        themes: []
+        themes: [],
+        count: 0
     })
 
     const suggestGameCallback = useCallback(
@@ -115,11 +116,16 @@ export default function GuessScreen() {
             )}
             {isGuessedGameSuggested && (
                 <Box pb="5" width="100%">
-                    <Heading size="8" align="center" color="green">
+                    <Heading size="8" align="center" color="green" mb="0">
                         You win in {guesses.length} tries! 🏆
                     </Heading>
+                    {hintData.count > 0 && (
+                        <Text size="3" align="center" as="div">
+                            ...and with just <b>{hintData.count} hints</b>
+                        </Text>
+                    )}
 
-                    <Flex pb="5" justify="center">
+                    <Flex mt="5" pb="5" justify="center">
                         <Button size="4" onClick={() => window.location.reload()}>
                             One more time?
                         </Button>

@@ -4,4 +4,5 @@ export interface HintData {
     themes: string[]
     platforms: string[]
     player_perspectives: string[]
+    count: number
 }
