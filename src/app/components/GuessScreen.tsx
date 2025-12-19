@@ -65,10 +65,11 @@ export default function GuessScreen() {
             ym(YANDEX_METRIKA_ID, 'reachGoal', 'win', {
                 name: game.name,
                 id: game.id,
-                try: MAX_TRIES - triesLeft
+                try: MAX_TRIES - triesLeft,
+                hints: hintData.count
             })
         }
-    }, [isGuessedGameSuggested, game, triesLeft])
+    }, [isGuessedGameSuggested, game, triesLeft, hintData])
 
     if (isLoading) {
         return (
