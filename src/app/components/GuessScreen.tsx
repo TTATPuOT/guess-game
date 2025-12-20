@@ -11,11 +11,21 @@ import { MAX_TRIES, YANDEX_METRIKA_ID } from '@/app/constatnts'
 import IgdbGameHoc from '@/app/components/IgdbGameHoc'
 import { ym } from 'react-metrika'
 import Summary from '@/app/components/Summary'
+import HintButton from '@/app/components/HintButton'
+import { HintData } from '@t/HintData'
 
 export default function GuessScreen() {
     const { game, isLoading } = useSuggestGame()
     const [guesses, setGuesses] = useState<IgdbGameWithDeveloper[]>([])
     const [suggestGameIsLoading, setSuggestGameIsLoading] = useState<boolean>(false)
+    const [hintData, setHintData] = useState<HintData>({
+        genres: [],
+        game_modes: [],
+        player_perspectives: [],
+        platforms: [],
+        themes: [],
+        count: 0
+    })
 
     const suggestGameCallback = useCallback(
         async (gameId: number) => {
@@ -55,10 +65,11 @@ export default function GuessScreen() {
             ym(YANDEX_METRIKA_ID, 'reachGoal', 'win', {
                 name: game.name,
                 id: game.id,
-                try: MAX_TRIES - triesLeft
+                try: MAX_TRIES - triesLeft,
+                hints: hintData.count
             })
         }
-    }, [isGuessedGameSuggested, game, triesLeft])
+    }, [isGuessedGameSuggested, game, triesLeft, hintData])
 
     if (isLoading) {
         return (
@@ -75,7 +86,9 @@ export default function GuessScreen() {
                 game,
                 guesses,
                 suggestGameCallback,
-                suggestGameIsLoading
+                suggestGameIsLoading,
+                hintData,
+                setHintData
             }}>
             {triesLeft > 0 && !isGuessedGameSuggested && (
                 <Box py="5" width="100%">
@@ -85,20 +98,35 @@ export default function GuessScreen() {
 
                     <SearchBar />
 
-                    <Text as="p" size="2" mb="5" color="gray" align="center">
-                        {triesLeft} tries left
-                    </Text>
+                    <Flex gap="3" justify="center" align="center" mb="5" mt="3">
+                        {guesses.length > 0 && <HintButton />}
+                        {guesses.length === 0 && (
+                            <Button size="2" variant="soft" disabled>
+                                Hint will be able after first guess
+                            </Button>
+                        )}
+                        <Box>
+                            <Text size="2" color="gray" align="center">
+                                {triesLeft} tries left
+                            </Text>
+                        </Box>
+                    </Flex>
 
                     <Summary />
                 </Box>
             )}
             {isGuessedGameSuggested && (
                 <Box pb="5" width="100%">
-                    <Heading size="8" align="center" color="green">
+                    <Heading size="8" align="center" color="green" mb="0">
                         You win in {guesses.length} tries! 🏆
                     </Heading>
+                    {hintData.count > 0 && (
+                        <Text size="3" align="center" as="div">
+                            ...and with just <b>{hintData.count} hints</b>
+                        </Text>
+                    )}
 
-                    <Flex pb="5" justify="center">
+                    <Flex mt="5" pb="5" justify="center">
                         <Button size="4" onClick={() => window.location.reload()}>
                             One more time?
                         </Button>

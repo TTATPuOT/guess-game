@@ -25,6 +25,18 @@ export default function GameBadge({ name, status, size }: BadgeProps) {
                 </Text>
             </Badge>
         )
+    } else if (status === GameMetricCorrect.HINT) {
+        return (
+            <Badge
+                color="grass"
+                variant="surface"
+                radius="full"
+                className="animation-badge-highlight">
+                <Text size={textSize} mx="2">
+                    {name}
+                </Text>
+            </Badge>
+        )
     }
 
     return (

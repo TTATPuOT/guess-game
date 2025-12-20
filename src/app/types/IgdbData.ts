@@ -26,35 +26,32 @@ export interface IgdbGameCover {
     image_id: string
 }
 
-export interface IgdbGameMode {
+export interface IgdbGameTag {
     id: number
     name: string
 }
 
-export interface IgdbGameGenre {
-    id: number
-    name: string
-}
+export type IgdbGameTagKeys =
+    | 'game_modes'
+    | 'genres'
+    | 'themes'
+    | 'player_perspectives'
+    | 'platforms'
 
-export interface IgdbGameTheme {
-    id: number
-    name: string
-}
+export interface IgdbGameMode extends IgdbGameTag {}
+
+export interface IgdbGameGenre extends IgdbGameTag {}
+
+export interface IgdbGameTheme extends IgdbGameTag {}
+
+export interface IgdbGamePlatform extends IgdbGameTag {}
+
+export interface IgdbGamePerspectives extends IgdbGameTag {}
 
 export interface IgdbGameInvolvedCompany {
     id: number
     company: number
     developer: boolean
-}
-
-export interface IgdbGamePlatform {
-    id: number
-    name: string
-}
-
-export interface IgdbGamePerspectives {
-    id: number
-    name: string
 }
 
 export interface IgdbGameGameType {

@@ -6,6 +6,7 @@ import { MAX_TRIES } from '@/app/constatnts'
 import 'normalize.css'
 import '@radix-ui/themes/styles.css'
 import './globals.css'
+import './animations.css'
 
 export const metadata: Metadata = {
     title: 'Guess Game',
